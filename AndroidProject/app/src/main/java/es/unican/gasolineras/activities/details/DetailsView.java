@@ -69,10 +69,9 @@ public class DetailsView extends AppCompatActivity {
         tvMunicipio.setText(gasolinera.getMunicipio());
         tvDireccion.setText(gasolinera.getDireccion());
         tvHorario.setText(gasolinera.getHorario());
-        tvPrecioSumario.setText(String.valueOf(precioSumario(gasolinera)));
-        tvGasoleoA.setText(String.valueOf(gasolinera.getGasoleoA()));
-        tvGasolina95.setText(String.valueOf(gasolinera.getGasolina95E5()));
-    }
+        tvPrecioSumario.setText(String.format("%.2f", precioSumario(gasolinera)));
+        tvGasoleoA.setText(String.format("%.2f", gasolinera.getGasoleoA()));
+        tvGasolina95.setText(String.format("%.2f", gasolinera.getGasolina95E5()));    }
 
     /**
      * @see AppCompatActivity#onOptionsItemSelected(MenuItem)
@@ -89,7 +88,11 @@ public class DetailsView extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * @param gasolinera
+     * @return media ponderada de los precios
+     */
     public double precioSumario(Gasolinera gasolinera) {
-        return (gasolinera.getGasoleoA() + gasolinera.getGasolina95E5()) / 2;
+        return (gasolinera.getGasoleoA() + gasolinera.getGasolina95E5() * 2) / 3;
     }
 }
