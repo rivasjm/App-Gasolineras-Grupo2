@@ -69,9 +69,30 @@ public class DetailsView extends AppCompatActivity {
         tvMunicipio.setText(gasolinera.getMunicipio());
         tvDireccion.setText(gasolinera.getDireccion());
         tvHorario.setText(gasolinera.getHorario());
-        tvPrecioSumario.setText(String.format("%.2f", precioSumario(gasolinera)));
-        tvGasoleoA.setText(String.format("%.2f", gasolinera.getGasoleoA()));
-        tvGasolina95.setText(String.format("%.2f", gasolinera.getGasolina95E5()));    }
+
+        double precioSumario = precioSumario(gasolinera);
+
+        // Mostrar sumario si esta disponible
+        if (precioSumario > 0) {
+            tvPrecioSumario.setText(String.format("%.2f", precioSumario) + "€");
+        } else {
+            tvPrecioSumario.setText("-");
+        }
+
+        // Mostrar diésel si está disponible
+        if (gasolinera.getGasoleoA() > 0) {
+            tvGasoleoA.setText(String.format("%.2f", gasolinera.getGasoleoA()) + "€");
+        } else {
+            tvGasoleoA.setText("-");
+        }
+
+        // Mostrar gasolina si está disponible
+        if (gasolinera.getGasolina95E5() > 0) {
+            tvGasolina95.setText(String.format("%.2f", gasolinera.getGasolina95E5()) + "€");
+        } else {
+            tvGasolina95.setText("-");
+        }
+    }
 
     /**
      * @see AppCompatActivity#onOptionsItemSelected(MenuItem)
@@ -89,7 +110,7 @@ public class DetailsView extends AppCompatActivity {
     }
 
     /**
-     * @param gasolinera
+     * @param gasolinera gasolinera sobre la que calcular el sumario
      * @return media ponderada de los precios
      */
     public double precioSumario(Gasolinera gasolinera) {
