@@ -1,12 +1,18 @@
 package es.unican.gasolineras.activities.main;
 
+import android.view.LayoutInflater;
+import android.view.View;
+
+import androidx.appcompat.app.AlertDialog;
+
 import java.util.List;
 
+import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.IDCCAAs;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
-import es.unican.gasolineras.repository.PuntosInteresDao;
+import es.unican.gasolineras.repository.IPuntosInteresDAO;
 
 /**
  * The presenter of the main activity of the application. It controls {@link MainView}
@@ -64,7 +70,11 @@ public class MainPresenter implements IMainContract.Presenter {
                 view.showLoadError();
             }
         };
-        PuntosInteresDao puntosInteresDAO = view.getPuntosInteresDAO();
+        IPuntosInteresDAO puntosInteresDAO = view.getPuntosInteresDAO();
         repository.requestGasolineras(callBack, IDCCAAs.CANTABRIA.id);
+    }
+
+    public void onMenuFiltrarClicked() {
+        view.showPopUpFiltrar();
     }
 }

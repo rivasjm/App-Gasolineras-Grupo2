@@ -2,13 +2,16 @@ package es.unican.gasolineras.activities.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.room.Room;
@@ -26,7 +29,7 @@ import es.unican.gasolineras.activities.details.DetailsView;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
-import es.unican.gasolineras.repository.PuntosInteresDao;
+import es.unican.gasolineras.repository.IPuntosInteresDAO;
 
 /**
  * The main view of the application. It shows a list of gas stations.
@@ -81,6 +84,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         int itemId = item.getItemId();
         if (itemId == R.id.menuItemInfo) {
             presenter.onMenuInfoClicked();
+            return true;
+        }
+        if (itemId == R.id.menuFiltrar) {
+            presenter.onMenuFiltrarClicked();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -157,9 +164,22 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     @Override
-    public PuntosInteresDao getPuntosInteresDAO() {
+    public IPuntosInteresDAO getPuntosInteresDAO() {
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "database-name").build();
         return db.puntosInteresDao();
+    }
+
+    @Override
+    public void showPopUpFiltrar() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainView.this);
+        LayoutInflater inflater = MainView.this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.puntos_interes_dialog_layout, null);
+
+        // Creo el alert
+        builder.setView(dialogView);
+        builder.setPositiveButton("ok", null );
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
