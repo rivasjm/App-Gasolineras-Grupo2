@@ -38,6 +38,10 @@ public interface IMainContract {
          */
         public void onMenuInfoClicked();
 
+        /**
+         *
+         */
+        public void onMenuAnhadirPuntoInteresClicked();
     }
 
     /**
@@ -100,9 +104,9 @@ public interface IMainContract {
         public void showInfoActivity();
 
         /**
-         *
-         * @return
+         * The view is requested to open the AñadirPuntoInteres activity.
+         * Only the Presenter should call this method
          */
-        public IPuntosInteresDao getPuntosInteresDAO();
+        public void showAnhadirPuntoInteresActivity();
     }
 }

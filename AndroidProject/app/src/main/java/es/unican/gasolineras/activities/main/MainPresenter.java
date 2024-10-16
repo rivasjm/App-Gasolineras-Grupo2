@@ -45,6 +45,15 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     /**
+     * @see IMainContract.Presenter#onMenuAnhadirPuntoInteresClicked()
+     */
+    public void onMenuAnhadirPuntoInteresClicked() {
+        view.showAnhadirPuntoInteresActivity();
+    }
+
+
+
+    /**
      * Loads the gas stations from the repository, and sends them to the view
      */
     private void load() {
@@ -64,7 +73,7 @@ public class MainPresenter implements IMainContract.Presenter {
                 view.showLoadError();
             }
         };
-        IPuntosInteresDao puntosInteresDAO = view.getPuntosInteresDAO();
         repository.requestGasolineras(callBack, IDCCAAs.CANTABRIA.id);
     }
+
 }

@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(indices = {@Index(value = {"nombre"}, unique = true)})
+@Entity
 public class PuntoInteres {
     @PrimaryKey
     public int idPuntoInteres;
