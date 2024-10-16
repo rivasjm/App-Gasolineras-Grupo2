@@ -6,6 +6,7 @@ import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.IDCCAAs;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
+import es.unican.gasolineras.repository.PuntosInteresDao;
 
 /**
  * The presenter of the main activity of the application. It controls {@link MainView}
@@ -63,7 +64,7 @@ public class MainPresenter implements IMainContract.Presenter {
                 view.showLoadError();
             }
         };
-
+        PuntosInteresDao puntosInteresDAO = view.getPuntosInteresDAO();
         repository.requestGasolineras(callBack, IDCCAAs.CANTABRIA.id);
     }
 }
