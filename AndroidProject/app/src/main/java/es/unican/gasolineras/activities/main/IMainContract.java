@@ -4,7 +4,7 @@ import java.util.List;
 
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
-import es.unican.gasolineras.repository.PuntosInteresDao;
+import es.unican.gasolineras.repository.IPuntosInteresDao;
 
 /**
  * The Presenter-View contract for the Main activity.
@@ -103,6 +103,6 @@ public interface IMainContract {
          *
          * @return
          */
-        public PuntosInteresDao getPuntosInteresDAO();
+        public IPuntosInteresDao getPuntosInteresDAO();
     }
 }

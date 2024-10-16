@@ -10,8 +10,8 @@ import java.util.List;
 import es.unican.gasolineras.model.PuntoInteres;
 
 @Dao
-public interface PuntosInteresDao {
-    @Query("SELECT * FROM Puntointeres")
+public interface IPuntosInteresDao {
+    @Query("SELECT * FROM PuntoInteres")
     List<PuntoInteres> getAll();
 
     // Buscar por id

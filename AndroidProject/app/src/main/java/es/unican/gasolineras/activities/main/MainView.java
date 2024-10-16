@@ -26,7 +26,7 @@ import es.unican.gasolineras.activities.details.DetailsView;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
-import es.unican.gasolineras.repository.PuntosInteresDao;
+import es.unican.gasolineras.repository.IPuntosInteresDao;
 
 /**
  * The main view of the application. It shows a list of gas stations.
@@ -157,7 +157,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     @Override
-    public PuntosInteresDao getPuntosInteresDAO() {
+    public IPuntosInteresDao getPuntosInteresDAO() {
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "database-name").build();
         return db.puntosInteresDao();
