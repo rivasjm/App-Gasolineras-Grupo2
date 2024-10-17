@@ -24,6 +24,13 @@ import dagger.hilt.android.testing.UninstallModules;
 import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.injection.RepositoriesModule;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.containsString;
 
 @UninstallModules(RepositoriesModule.class)
 @HiltAndroidTest
@@ -45,6 +52,23 @@ public class ExampleUITest {
     @Test
     public void showStationsTest() {
         assertEquals(10, 5+5);
+    }
+
+    @Test
+    public void testGasolineraCorrecta() {
+        // Asegúrate de que una gasolinera con el rótulo "CEPSA" y otros datos se muestra correctamente
+
+        // Verificar que el rótulo "CEPSA" aparece en la interfaz
+        onView(withText(containsString("CEPSA")))
+                .check(matches(isDisplayed()));
+
+        // Verificar que el municipio "Alfoz de Lloredo" se muestra
+        onView(withText(containsString("Alfoz de Lloredo")))
+                .check(matches(isDisplayed()));
+
+        // Verificar que el precio del Gasóleo A es correcto
+        onView(withText(containsString("1.509")))
+                .check(matches(isDisplayed()));
     }
 
 }

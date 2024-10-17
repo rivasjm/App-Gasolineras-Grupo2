@@ -105,6 +105,10 @@ public interface IMainContract {
          */
         public IPuntosInteresDAO getPuntosInteresDAO();
 
+        /**
+         *  La vista manda una peticion al presenter para que muestre el
+         *  popup de filtrar.
+         */
         public void showPopUpFiltrar();
     }
 }

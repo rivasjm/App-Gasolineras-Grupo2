@@ -7,7 +7,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,9 +29,11 @@ import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.model.PuntoInteres;
 import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 import es.unican.gasolineras.repository.IPuntosInteresDAO;
+import es.unican.gasolineras.repository.IPuntosInteresDAO_Impl;
 
 /**
  * The main view of the application. It shows a list of gas stations.
@@ -39,6 +43,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     /** The presenter of this view */
     private MainPresenter presenter;
+
+    /** La base de datos de los puntos de interes */
+    private AppDatabase db;
+    private IPuntosInteresDAO puntosInteresDAO;
 
     /** The repository to access the data. This is automatically injected by Hilt in this class */
     @Inject
@@ -165,7 +173,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     @Override
     public IPuntosInteresDAO getPuntosInteresDAO() {
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+        db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "database-name").build();
         return db.puntosInteresDao();
     }
@@ -176,9 +184,27 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         LayoutInflater inflater = MainView.this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.puntos_interes_dialog_layout, null);
 
+        // Referencio el spinner
+        Spinner spiner = dialogView.findViewById(R.id.spinnerPtosInteres);
+
+        // Creo el adapter del spinner
+        puntosInteresDAO = db.puntosInteresDao();
+        List<PuntoInteres> puntosInteres = puntosInteresDAO.getAll();
+        // Crear un array de Strings para almacenar los nombres de los puntos de interés
+        String[] arraySpinner = new String[puntosInteres.size()];
+        // Llenar el array con los nombres de los puntos de interés
+        for (int i = 0; i < puntosInteres.size(); i++) {
+            arraySpinner[i] = puntosInteres.get(i).nombre;  // Asegúrate de tener un getter getNombre() en PuntoInteres
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainView.this, android.R.layout.simple_spinner_item, arraySpinner);
+        spiner.setAdapter(adapter);
+
         // Creo el alert
         builder.setView(dialogView);
         builder.setPositiveButton("ok", null );
+
+        // Mostrar el dialog
         AlertDialog dialog = builder.create();
         dialog.show();
     }
