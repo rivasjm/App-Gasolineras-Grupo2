@@ -31,7 +31,7 @@ public class AnhadirPuntoInteresPresenter {
 
         // Validar que los campos no estén vacíos
         if (nombre.isEmpty() || latitudStr.isEmpty() || longitudStr.isEmpty()) {
-            vista.mostrarMensaje("Por favor, llena todos los campos");
+            vista.mostrarMensaje("Por favor, llene todos los campos");
             return;
         }
         if (puntosInteresDao.loadByName(nombre) != null) {
