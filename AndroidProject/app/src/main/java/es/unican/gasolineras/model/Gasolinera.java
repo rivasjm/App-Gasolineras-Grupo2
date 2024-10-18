@@ -34,4 +34,6 @@ public class Gasolinera {
 
     @SerializedName("Horario")                      protected String horario;
 
+    @SerializedName("Latitud")                      protected double latitud;
+    @SerializedName("Longitud (WGS84)")             protected double longitud;
 }

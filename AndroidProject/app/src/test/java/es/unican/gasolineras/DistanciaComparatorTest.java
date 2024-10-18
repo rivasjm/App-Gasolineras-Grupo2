@@ -15,19 +15,32 @@ public class DistanciaComparatorTest {
 
     private Gasolinera cercana;
     private Gasolinera lejana;
+    private Gasolinera auxCercana;
+
 
     private PuntoInteres universidad;
 
     @Before
     public void inicializa(){
 
+        //creo gasolineras necesarias
+
         cercana = new Gasolinera();
         cercana.setId("GasolineraPaco");
-        cercana.setDireccion("Calle Los Castros");
+        cercana.setDireccion("Sardinero");
+        cercana.setLatitud(43.47618775921668);
+        cercana.setLongitud(-3.7933535145721233);
 
         lejana = new Gasolinera();
         lejana.setId("GasolineraMario");
-        lejana.setDireccion("Calle Honduras");
+        lejana.setDireccion("Torrelavega");
+        lejana.setLatitud(43.356608665447474);
+        lejana.setLongitud(-4.046146566530483);
+
+        auxCercana = new Gasolinera();
+        auxCercana.setId("GasolineraJaime");
+        auxCercana.setLatitud(43.47618775921668);
+        auxCercana.setLongitud(-3.7933535145721233);
 
         //creo un punto de interes
         universidad = new PuntoInteres();
@@ -41,6 +54,13 @@ public class DistanciaComparatorTest {
     @Test
     public void testComparadorDistancia(){
 
-        assertEquals(comparadorDistancia.compare(cercana, lejana), 0);
+        //caso que la primera gasolinera esta mas cerca
+        assertEquals(comparadorDistancia.compare(cercana, lejana), 1);
+
+        //caso que la primera gasolinera esta mas lejos
+        assertEquals(comparadorDistancia.compare(lejana, cercana), -1);
+
+        //caso que esten a la misma distancia
+        assertEquals(comparadorDistancia.compare(cercana, auxCercana), 0);
     }
 }
