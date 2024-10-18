@@ -5,7 +5,12 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
 public class PuntoInteres {
     @PrimaryKey
     public int idPuntoInteres;
