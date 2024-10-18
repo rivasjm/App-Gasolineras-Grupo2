@@ -6,7 +6,6 @@ import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.IDCCAAs;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
-import es.unican.gasolineras.repository.IPuntosInteresDao;
 
 /**
  * The presenter of the main activity of the application. It controls {@link MainView}
@@ -64,7 +63,7 @@ public class MainPresenter implements IMainContract.Presenter {
             @Override
             public void onSuccess(List<Gasolinera> stations) {
                 view.showStations(stations);
-                view.showLoadCorrect(stations.size());
+                // view.showLoadCorrect(stations.size());
             }
 
             @Override

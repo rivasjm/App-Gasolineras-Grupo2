@@ -1,15 +1,22 @@
 package es.unican.gasolineras.activities.puntoInteres;
 
-import androidx.room.Room;
+import android.database.sqlite.SQLiteConstraintException;
+
 import es.unican.gasolineras.model.PuntoInteres;
-import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.IPuntosInteresDao;
 
+/**
+ * El presenter que controla la actividad añadir punto interés.
+ */
 public class AnhadirPuntoInteresPresenter {
 
     private IAnhadirPuntoInteresView vista;
     private IPuntosInteresDao puntosInteresDao;
 
+    /**
+     * Constructor.
+     * @param vista vista controlada por este presenter.
+     */
     public AnhadirPuntoInteresPresenter(IAnhadirPuntoInteresView vista) {
         this.vista = vista;
         this.puntosInteresDao = vista.getPuntosInteresDAO();
@@ -38,10 +45,7 @@ public class AnhadirPuntoInteresPresenter {
             double longitud = Double.parseDouble(longitudStr);
 
             // Crear un nuevo punto de interés
-            PuntoInteres nuevoPunto = new PuntoInteres();
-            nuevoPunto.nombre = nombre;
-            nuevoPunto.latitud = latitud;
-            nuevoPunto.longitud = longitud;
+            PuntoInteres nuevoPunto = new PuntoInteres(nombre, latitud, longitud);
 
             // Insertar el nuevo punto de interés en la base de datos
             puntosInteresDao.insertAll(nuevoPunto);
@@ -51,6 +55,8 @@ public class AnhadirPuntoInteresPresenter {
 
         } catch (NumberFormatException e) {
             vista.mostrarMensaje("Por favor, ingresa valores numéricos válidos para latitud y longitud");
+        } catch (SQLiteConstraintException e) {
+            vista.mostrarMensaje("Ya existe un punto de interés con ese nombre");
         }
     }
 }
