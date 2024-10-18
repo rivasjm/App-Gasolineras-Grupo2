@@ -20,6 +20,7 @@ import androidx.room.Room;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -31,6 +32,7 @@ import es.unican.gasolineras.activities.details.DetailsView;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.PuntoInteres;
 import es.unican.gasolineras.repository.AppDatabase;
+import es.unican.gasolineras.repository.DbFunctions;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 import es.unican.gasolineras.repository.IPuntosInteresDAO;
 import es.unican.gasolineras.repository.IPuntosInteresDAO_Impl;
@@ -47,6 +49,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     /** La base de datos de los puntos de interes */
     private AppDatabase db;
     private IPuntosInteresDAO puntosInteresDAO;
+
+    /** Atributo de la lista de Puntos de Interes */
+    private List<PuntoInteres> puntosInteres;
 
     /** The repository to access the data. This is automatically injected by Hilt in this class */
     @Inject
@@ -172,10 +177,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     @Override
-    public IPuntosInteresDAO getPuntosInteresDAO() {
-        db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name").build();
-        return db.puntosInteresDao();
+    public void getPuntosInteresDAO() {
+        db = DbFunctions.generaBaseDatosPuntosInteres(getApplicationContext());
+        puntosInteresDAO = db.puntosInteresDao();
     }
 
     @Override
@@ -188,8 +192,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         Spinner spiner = dialogView.findViewById(R.id.spinnerPtosInteres);
 
         // Creo el adapter del spinner
-        puntosInteresDAO = db.puntosInteresDao();
-        List<PuntoInteres> puntosInteres = puntosInteresDAO.getAll();
+        puntosInteres = puntosInteresDAO.getAll();
+
         // Crear un array de Strings para almacenar los nombres de los puntos de interés
         String[] arraySpinner = new String[puntosInteres.size()];
         // Llenar el array con los nombres de los puntos de interés
@@ -197,15 +201,42 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             arraySpinner[i] = puntosInteres.get(i).nombre;  // Asegúrate de tener un getter getNombre() en PuntoInteres
         }
 
+        // Relleno el spinner con la lista de los puntos de interes
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainView.this, android.R.layout.simple_spinner_item, arraySpinner);
         spiner.setAdapter(adapter);
 
-        // Creo el alert
+        // Creo el alert y muestro el dialog
         builder.setView(dialogView);
-        builder.setPositiveButton("ok", null );
-
-        // Mostrar el dialog
         AlertDialog dialog = builder.create();
         dialog.show();
+
+        // Referenciar el botón "Ordenar" y "Cancelar"
+        View btnOrdenar = dialogView.findViewById(R.id.btnOrdenar);
+        View btnCancelar = dialogView.findViewById(R.id.btnCancelar);
+
+        // Listener para el botón "Cancelar"
+        btnCancelar.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        // Listener para el botón "Ordenar"
+        btnOrdenar.setOnClickListener(v -> {
+            // Obtener el punto de interés seleccionado del spinner
+            int selectedPosition = spiner.getSelectedItemPosition();
+            if (selectedPosition != -1) {  // Verificar que se haya seleccionado un punto de interés
+                PuntoInteres puntoSeleccionado = puntosInteres.get(selectedPosition);
+                // Llamar al método onOrdenarClicked pasando el PuntoInteres seleccionado
+                onOrdenarClicked(puntoSeleccionado);
+                // Cerrar el popup
+                dialog.dismiss();
+            } else {
+                Toast.makeText(MainView.this, "Selecciona un punto de interés", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onOrdenarClicked(PuntoInteres p) {
+        presenter.ordenarListaGasolineras(p);
     }
 }
