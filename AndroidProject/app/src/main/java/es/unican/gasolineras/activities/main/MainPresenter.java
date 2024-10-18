@@ -10,6 +10,7 @@ import java.util.List;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.IDCCAAs;
+import es.unican.gasolineras.model.PuntoInteres;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 import es.unican.gasolineras.repository.IPuntosInteresDAO;
@@ -70,11 +71,15 @@ public class MainPresenter implements IMainContract.Presenter {
                 view.showLoadError();
             }
         };
-        IPuntosInteresDAO puntosInteresDAO = view.getPuntosInteresDAO();
+        view.getPuntosInteresDAO();
         repository.requestGasolineras(callBack, IDCCAAs.CANTABRIA.id);
     }
 
     public void onMenuFiltrarClicked() {
         view.showPopUpFiltrar();
+    }
+
+    public void ordenarListaGasolineras(PuntoInteres p) {
+
     }
 }
