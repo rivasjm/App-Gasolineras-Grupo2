@@ -5,6 +5,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 
+import java.util.Collections;
 import java.util.List;
 
 import es.unican.gasolineras.R;
@@ -22,6 +23,9 @@ public class MainPresenter implements IMainContract.Presenter {
 
     /** The view that is controlled by this presenter */
     private IMainContract.View view;
+
+    /** Atributo lista gasolineras */
+    List<Gasolinera> gasolineras;
 
     /**
      * @see IMainContract.Presenter#init(IMainContract.View)
@@ -61,6 +65,7 @@ public class MainPresenter implements IMainContract.Presenter {
 
             @Override
             public void onSuccess(List<Gasolinera> stations) {
+                gasolineras = stations;
                 view.showStations(stations);
                 view.showLoadCorrect(stations.size());
             }
@@ -80,6 +85,9 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     public void ordenarListaGasolineras(PuntoInteres p) {
-
+        GasolineraDistanciaComparator comparator = new GasolineraDistanciaComparator(p);
+        List<Gasolinera> gasolinerasCopia = gasolineras;
+        gasolinerasCopia.sort(comparator);
+        view.showStations(gasolinerasCopia);
     }
 }
