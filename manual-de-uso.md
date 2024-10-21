@@ -4,21 +4,27 @@
 
 ### 1. Añadir un Nuevo Punto de Interés
 
-1. El usuario debe rellenar los siguientes campos:
+1. El usuario selecciona la opción **Añadir punto de interés** en el menú desplegable.
+
+   ![1](https://github.com/user-attachments/assets/ea9f8485-138f-4390-ac0c-902f128292bd)
+
+2. El usuario debe rellenar los siguientes campos:
    - **Nombre**: El nombre del nuevo punto de interés.
    - **Latitud**: La latitud en formato numérico (por ejemplo, `43.4623`).
    - **Longitud**: La longitud en formato numérico (por ejemplo, `-3.8099`).
 
-2. Después de introducir la información, el usuario debe pulsar el botón **Guardar** para almacenar el punto de interés en la base de datos.
+   ![2](https://github.com/user-attachments/assets/35260b88-41c3-49f4-8d0d-84c7558191e8)
 
-3. Si algún campo está vacío o los valores numéricos son incorrectos, el sistema mostrará un mensaje de error:
+3. Después de introducir la información, el usuario debe pulsar el botón **Guardar** para almacenar el punto de interés en la base de datos.
+
+4. Si algún campo está vacío o los valores numéricos son incorrectos, el sistema mostrará un mensaje de error:
    - "Por favor, llene todos los campos" si algún campo está vacío.
    - "Por favor, ingresa valores numéricos válidos para latitud y longitud" si los valores no son numéricos.
 
-4. Si ya existe un punto de interés con el mismo nombre, se mostrará un mensaje:
+5. Si ya existe un punto de interés con el mismo nombre, se mostrará un mensaje:
    - "Ya existe un punto de interés con ese nombre".
 
-5. Si todo es correcto, el sistema mostrará un mensaje de éxito:
+6. Si todo es correcto, el sistema mostrará un mensaje de éxito:
    - "Punto de interés guardado".
    - A continuación, la vista se cerrará automáticamente.
 
