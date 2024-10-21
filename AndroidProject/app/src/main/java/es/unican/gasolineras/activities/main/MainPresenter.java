@@ -1,5 +1,6 @@
 package es.unican.gasolineras.activities.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import es.unican.gasolineras.model.Gasolinera;
@@ -85,7 +86,7 @@ public class MainPresenter implements IMainContract.Presenter {
      */
     public void ordenarGasolinerasCercanasPtoInteres(PuntoInteres p) {
         GasolineraDistanciaComparator comparator = new GasolineraDistanciaComparator(p);
-        List<Gasolinera> gasolinerasCopia = gasolineras;
+        List<Gasolinera> gasolinerasCopia = new ArrayList<>(gasolineras);
         gasolinerasCopia.sort(comparator);
         view.showStations(gasolinerasCopia);
     }
