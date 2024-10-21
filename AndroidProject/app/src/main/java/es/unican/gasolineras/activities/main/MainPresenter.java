@@ -1,12 +1,13 @@
 package es.unican.gasolineras.activities.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.IDCCAAs;
+import es.unican.gasolineras.model.PuntoInteres;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
-import es.unican.gasolineras.repository.PuntosInteresDao;
 
 /**
  * The presenter of the main activity of the application. It controls {@link MainView}
@@ -15,6 +16,9 @@ public class MainPresenter implements IMainContract.Presenter {
 
     /** The view that is controlled by this presenter */
     private IMainContract.View view;
+
+    /** Atributo lista gasolineras */
+    List<Gasolinera> gasolineras;
 
     /**
      * @see IMainContract.Presenter#init(IMainContract.View)
@@ -54,6 +58,7 @@ public class MainPresenter implements IMainContract.Presenter {
 
             @Override
             public void onSuccess(List<Gasolinera> stations) {
+                gasolineras = stations;
                 view.showStations(stations);
                 view.showLoadCorrect(stations.size());
             }
@@ -64,7 +69,25 @@ public class MainPresenter implements IMainContract.Presenter {
                 view.showLoadError();
             }
         };
-        PuntosInteresDao puntosInteresDAO = view.getPuntosInteresDAO();
+        view.getPuntosInteresDAO();
         repository.requestGasolineras(callBack, IDCCAAs.CANTABRIA.id);
+    }
+
+    /**
+     * Muestra el popup de filtrar
+     */
+    public void onMenuFiltrarClicked() {
+        view.showPopUpFiltrar();
+    }
+
+    /**
+     * Muestra la lista de gasolineras ordenadas por el punto de interes
+     * @param p el punto de interes
+     */
+    public void ordenarGasolinerasCercanasPtoInteres(PuntoInteres p) {
+        GasolineraDistanciaComparator comparator = new GasolineraDistanciaComparator(p);
+        List<Gasolinera> gasolinerasCopia = new ArrayList<>(gasolineras);
+        gasolinerasCopia.sort(comparator);
+        view.showStations(gasolinerasCopia);
     }
 }

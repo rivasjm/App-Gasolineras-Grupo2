@@ -3,8 +3,9 @@ package es.unican.gasolineras.activities.main;
 import java.util.List;
 
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.model.PuntoInteres;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
-import es.unican.gasolineras.repository.PuntosInteresDao;
+import es.unican.gasolineras.repository.IPuntosInteresDAO;
 
 /**
  * The Presenter-View contract for the Main activity.
@@ -103,6 +104,17 @@ public interface IMainContract {
          *
          * @return
          */
-        public PuntosInteresDao getPuntosInteresDAO();
+        public void getPuntosInteresDAO();
+
+        /**
+         *  La vista manda una peticion al presenter para que muestre el
+         *  popup de filtrar.
+         */
+        public void showPopUpFiltrar();
+
+        /**
+         * Informa al presenter que el boton de ordenar ha sido clickado.
+         */
+        public void onOrdenarClicked(PuntoInteres p);
     }
 }

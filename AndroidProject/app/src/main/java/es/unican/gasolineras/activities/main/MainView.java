@@ -2,16 +2,21 @@ package es.unican.gasolineras.activities.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.room.Room;
 
 import org.parceler.Parcels;
 
@@ -24,9 +29,11 @@ import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.model.PuntoInteres;
 import es.unican.gasolineras.repository.AppDatabase;
+import es.unican.gasolineras.repository.DbFunctions;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
-import es.unican.gasolineras.repository.PuntosInteresDao;
+import es.unican.gasolineras.repository.IPuntosInteresDAO;
 
 /**
  * The main view of the application. It shows a list of gas stations.
@@ -36,6 +43,13 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     /** The presenter of this view */
     private MainPresenter presenter;
+
+    /** La base de datos de los puntos de interes */
+    private AppDatabase db;
+    private IPuntosInteresDAO puntosInteresDAO;
+
+    /** Atributo de la lista de Puntos de Interes */
+    private List<PuntoInteres> puntosInteres;
 
     /** The repository to access the data. This is automatically injected by Hilt in this class */
     @Inject
@@ -81,6 +95,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         int itemId = item.getItemId();
         if (itemId == R.id.menuItemInfo) {
             presenter.onMenuInfoClicked();
+            return true;
+        }
+        if (itemId == R.id.menuFiltrar) {
+            presenter.onMenuFiltrarClicked();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -157,9 +175,76 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     @Override
-    public PuntosInteresDao getPuntosInteresDAO() {
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name").build();
-        return db.puntosInteresDao();
+    public void getPuntosInteresDAO() {
+        db = DbFunctions.generaBaseDatosPuntosInteres(getApplicationContext());
+        puntosInteresDAO = db.puntosInteresDao();
+    }
+
+    @Override
+    public void showPopUpFiltrar() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainView.this);
+        LayoutInflater inflater = MainView.this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.puntos_interes_dialog_layout, null);
+
+        // Referencio el spinner
+        Spinner spinner = dialogView.findViewById(R.id.spinnerPtosInteres);
+        TextView tvListaVacia = dialogView.findViewById(R.id.tvListaVacia);  // Referencia al TextView para el mensaje de lista vacía
+        View btnOrdenar = dialogView.findViewById(R.id.btnOrdenar);  // Referencia al botón "Ordenar"
+        View btnCancelar = dialogView.findViewById(R.id.btnCancelar);  // Referencia al botón "Cancelar"
+
+        // Obtengo la lista de puntos de interés
+        puntosInteres = puntosInteresDAO.getAll();
+
+        if (puntosInteres.isEmpty()) {
+            // Si la lista está vacía, mostrar el mensaje y deshabilitar el botón "Ordenar"
+            ((View) tvListaVacia).setVisibility(View.VISIBLE);
+            btnOrdenar.setEnabled(false);  // Deshabilitar el botón "Ordenar"
+        } else {
+            // Si la lista no está vacía, ocultar el mensaje y habilitar el botón "Ordenar"
+            tvListaVacia.setVisibility(View.GONE);
+            btnOrdenar.setEnabled(true);  // Habilitar el botón "Ordenar"
+
+            // Crear un array de Strings para almacenar los nombres de los puntos de interés
+            String[] arraySpinner = new String[puntosInteres.size()];
+            // Llenar el array con los nombres de los puntos de interés
+            for (int i = 0; i < puntosInteres.size(); i++) {
+                arraySpinner[i] = puntosInteres.get(i).nombre;
+            }
+
+            // Relleno el spinner con la lista de los puntos de interés
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(MainView.this, android.R.layout.simple_spinner_item, arraySpinner);
+            spinner.setAdapter(adapter);
+        }
+
+        // Creo el alert y muestro el dialog
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Listener para el botón "Cancelar"
+        btnCancelar.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        // Listener para el botón "Ordenar"
+        btnOrdenar.setOnClickListener(v -> {
+            // Obtener el punto de interés seleccionado del spinner
+            int selectedPosition = spinner.getSelectedItemPosition();
+            if (selectedPosition != -1) {  // Verificar que se haya seleccionado un punto de interés
+                PuntoInteres puntoSeleccionado = puntosInteres.get(selectedPosition);
+                // Llamar al método onOrdenarClicked pasando el PuntoInteres seleccionado
+                onOrdenarClicked(puntoSeleccionado);
+                // Cerrar el popup
+                dialog.dismiss();
+            } else {
+                Toast.makeText(MainView.this, "Selecciona un punto de interés", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    @Override
+    public void onOrdenarClicked(PuntoInteres p) {
+        presenter.ordenarGasolinerasCercanasPtoInteres(p);
     }
 }
