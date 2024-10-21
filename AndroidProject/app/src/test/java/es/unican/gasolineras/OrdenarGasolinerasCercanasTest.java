@@ -69,8 +69,8 @@ public class OrdenarGasolinerasCercanasTest {
 
         //creo la lista de gasolineras que voy a mockear
         listaGasolineras = new ArrayList<>();
-        listaGasolineras.add(gasolineraCercana);
         listaGasolineras.add(gasolineraLejana);
+        listaGasolineras.add(gasolineraCercana);
 
 
         //creo un punto de interes

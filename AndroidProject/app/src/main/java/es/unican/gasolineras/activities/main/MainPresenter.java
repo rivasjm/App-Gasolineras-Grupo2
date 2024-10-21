@@ -72,10 +72,17 @@ public class MainPresenter implements IMainContract.Presenter {
         repository.requestGasolineras(callBack, IDCCAAs.CANTABRIA.id);
     }
 
+    /**
+     * Muestra el popup de filtrar
+     */
     public void onMenuFiltrarClicked() {
         view.showPopUpFiltrar();
     }
 
+    /**
+     * Muestra la lista de gasolineras ordenadas por el punto de interes
+     * @param p el punto de interes
+     */
     public void ordenarGasolinerasCercanasPtoInteres(PuntoInteres p) {
         GasolineraDistanciaComparator comparator = new GasolineraDistanciaComparator(p);
         List<Gasolinera> gasolinerasCopia = gasolineras;
