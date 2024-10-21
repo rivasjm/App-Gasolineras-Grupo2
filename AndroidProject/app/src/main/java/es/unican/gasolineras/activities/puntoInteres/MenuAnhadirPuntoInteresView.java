@@ -7,18 +7,31 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.repository.AppDatabase;
+import es.unican.gasolineras.repository.DbFunctions;
 import es.unican.gasolineras.repository.IPuntosInteresDao;
 
+/**
+ * Actividad que representa la vista para añadir un nuevo punto de interés.
+ * Permite al usuario introducir la información del punto de interés (nombre, latitud, longitud)
+ * y guardarlo en la base de datos. Implementa la interfaz {@link IAnhadirPuntoInteresView}
+ * para interactuar con el presentador {@link AnhadirPuntoInteresPresenter}.
+ */
 public class MenuAnhadirPuntoInteresView extends AppCompatActivity implements IAnhadirPuntoInteresView {
 
     private EditText etNombre, etLatitud, etLongitud;
     private Button btnGuardar, btnCancelar;
     private AnhadirPuntoInteresPresenter presentador;
 
+    /**
+     * Called when the activity is first created.
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,36 +68,57 @@ public class MenuAnhadirPuntoInteresView extends AppCompatActivity implements IA
         });
     }
 
-    // Métodos de la interfaz IAnhadirPuntoInteresView
+    /**
+     * Muestra un mensaje al usuario.
+     * @param mensaje El mensaje a mostrar.
+     */
     @Override
     public void mostrarMensaje(String mensaje) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Obtiene el nombre del punto de interés.
+     * @return El nombre del punto de interés.
+     */
     @Override
     public String obtenerNombre() {
         return etNombre.getText().toString();
     }
 
+    /**
+     * Obtiene la latitud del punto de interés.
+     * @return La latitud del punto de interés.
+     */
     @Override
     public String obtenerLatitud() {
         return etLatitud.getText().toString();
     }
 
+    /**
+     * Obtiene la longitud del punto de interés.
+     * @return La longitud del punto de interés.
+     */
     @Override
     public String obtenerLongitud() {
         return etLongitud.getText().toString();
     }
 
+    /**
+     * Cierra la actividad después de guardar el punto de interés.
+     */
     @Override
     public void cerrarVista() {
-        finish(); // Cerrar la actividad
+        finish();
     }
 
+    /**
+     * Obtiene el DAO de puntos de interés.
+     * @return El DAO de puntos de interés.
+     */
     @Override
     public IPuntosInteresDao getPuntosInteresDAO() {
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "puntos-interes").allowMainThreadQueries().build();
+        AppDatabase db = DbFunctions.generaBaseDatosPuntosInteres(getApplicationContext());
         return db.puntosInteresDao();
     }
 }

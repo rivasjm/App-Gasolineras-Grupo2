@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.room.Room;
 
 import org.parceler.Parcels;
 
@@ -25,9 +24,7 @@ import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
 import es.unican.gasolineras.activities.puntoInteres.MenuAnhadirPuntoInteresView;
 import es.unican.gasolineras.model.Gasolinera;
-import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
-import es.unican.gasolineras.repository.IPuntosInteresDao;
 
 /**
  * The main view of the application. It shows a list of gas stations.
