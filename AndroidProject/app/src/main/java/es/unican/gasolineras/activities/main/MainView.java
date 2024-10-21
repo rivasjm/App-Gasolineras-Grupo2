@@ -10,17 +10,16 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.room.Room;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,7 +34,6 @@ import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.DbFunctions;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 import es.unican.gasolineras.repository.IPuntosInteresDAO;
-import es.unican.gasolineras.repository.IPuntosInteresDAO_Impl;
 
 /**
  * The main view of the application. It shows a list of gas stations.
@@ -189,30 +187,39 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         View dialogView = inflater.inflate(R.layout.puntos_interes_dialog_layout, null);
 
         // Referencio el spinner
-        Spinner spiner = dialogView.findViewById(R.id.spinnerPtosInteres);
+        Spinner spinner = dialogView.findViewById(R.id.spinnerPtosInteres);
+        TextView tvListaVacia = dialogView.findViewById(R.id.tvListaVacia);  // Referencia al TextView para el mensaje de lista vacía
+        View btnOrdenar = dialogView.findViewById(R.id.btnOrdenar);  // Referencia al botón "Ordenar"
+        View btnCancelar = dialogView.findViewById(R.id.btnCancelar);  // Referencia al botón "Cancelar"
 
-        // Creo el adapter del spinner
+        // Obtengo la lista de puntos de interés
         puntosInteres = puntosInteresDAO.getAll();
 
-        // Crear un array de Strings para almacenar los nombres de los puntos de interés
-        String[] arraySpinner = new String[puntosInteres.size()];
-        // Llenar el array con los nombres de los puntos de interés
-        for (int i = 0; i < puntosInteres.size(); i++) {
-            arraySpinner[i] = puntosInteres.get(i).nombre;  // Asegúrate de tener un getter getNombre() en PuntoInteres
-        }
+        if (puntosInteres.isEmpty()) {
+            // Si la lista está vacía, mostrar el mensaje y deshabilitar el botón "Ordenar"
+            ((View) tvListaVacia).setVisibility(View.VISIBLE);
+            btnOrdenar.setEnabled(false);  // Deshabilitar el botón "Ordenar"
+        } else {
+            // Si la lista no está vacía, ocultar el mensaje y habilitar el botón "Ordenar"
+            tvListaVacia.setVisibility(View.GONE);
+            btnOrdenar.setEnabled(true);  // Habilitar el botón "Ordenar"
 
-        // Relleno el spinner con la lista de los puntos de interes
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainView.this, android.R.layout.simple_spinner_item, arraySpinner);
-        spiner.setAdapter(adapter);
+            // Crear un array de Strings para almacenar los nombres de los puntos de interés
+            String[] arraySpinner = new String[puntosInteres.size()];
+            // Llenar el array con los nombres de los puntos de interés
+            for (int i = 0; i < puntosInteres.size(); i++) {
+                arraySpinner[i] = puntosInteres.get(i).nombre;
+            }
+
+            // Relleno el spinner con la lista de los puntos de interés
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(MainView.this, android.R.layout.simple_spinner_item, arraySpinner);
+            spinner.setAdapter(adapter);
+        }
 
         // Creo el alert y muestro el dialog
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
         dialog.show();
-
-        // Referenciar el botón "Ordenar" y "Cancelar"
-        View btnOrdenar = dialogView.findViewById(R.id.btnOrdenar);
-        View btnCancelar = dialogView.findViewById(R.id.btnCancelar);
 
         // Listener para el botón "Cancelar"
         btnCancelar.setOnClickListener(v -> {
@@ -222,7 +229,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         // Listener para el botón "Ordenar"
         btnOrdenar.setOnClickListener(v -> {
             // Obtener el punto de interés seleccionado del spinner
-            int selectedPosition = spiner.getSelectedItemPosition();
+            int selectedPosition = spinner.getSelectedItemPosition();
             if (selectedPosition != -1) {  // Verificar que se haya seleccionado un punto de interés
                 PuntoInteres puntoSeleccionado = puntosInteres.get(selectedPosition);
                 // Llamar al método onOrdenarClicked pasando el PuntoInteres seleccionado
@@ -235,8 +242,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         });
     }
 
+
     @Override
     public void onOrdenarClicked(PuntoInteres p) {
-        presenter.ordenarListaGasolineras(p);
+        presenter.ordenarGasolinerasCercanasPtoInteres(p);
     }
 }

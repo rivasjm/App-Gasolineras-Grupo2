@@ -48,5 +48,25 @@
         android:layout_marginTop="32dp"
         android:text="CANCELAR"
         app:layout_constraintEnd_toEndOf="@+id/spinnerPtosInteres"
+        app:layout_constraintTop_toBottomOf="@+id/tvListaVacia" />
+
+    <TextView
+        android:id="@+id/tvListaVacia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Error: No hay ningun punto de interes añadido"
+        android:textColor="#FF0000"
+        android:textStyle="bold|italic"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerPtosInteres" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCancelar" />
 </androidx.constraintlayout.widget.ConstraintLayout>
