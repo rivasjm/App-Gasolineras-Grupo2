@@ -63,7 +63,7 @@ public class MainPresenter implements IMainContract.Presenter {
             @Override
             public void onSuccess(List<Gasolinera> stations) {
                 view.showStations(stations);
-                // view.showLoadCorrect(stations.size());
+                view.showLoadCorrect(stations.size());
             }
 
             @Override

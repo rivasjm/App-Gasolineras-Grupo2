@@ -1,6 +1,7 @@
 package es.unican.gasolineras.activities.puntoInteres;
 
 import android.database.sqlite.SQLiteConstraintException;
+import android.database.sqlite.SQLiteException;
 
 import es.unican.gasolineras.model.PuntoInteres;
 import es.unican.gasolineras.repository.IPuntosInteresDao;
@@ -34,10 +35,6 @@ public class AnhadirPuntoInteresPresenter {
             vista.mostrarMensaje("Por favor, llene todos los campos");
             return;
         }
-        if (puntosInteresDao.loadByName(nombre) != null) {
-            vista.mostrarMensaje("Ya existe un punto de interés con ese nombre");
-            return;
-        }
 
         try {
             // Convertir las coordenadas a tipo double
@@ -57,6 +54,8 @@ public class AnhadirPuntoInteresPresenter {
             vista.mostrarMensaje("Por favor, ingresa valores numéricos válidos para latitud y longitud");
         } catch (SQLiteConstraintException e) {
             vista.mostrarMensaje("Ya existe un punto de interés con ese nombre");
+        } catch (SQLiteException e) {
+            vista.mostrarMensaje("Ha ocurrido un error en la base de datos");
         }
     }
 }

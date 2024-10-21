@@ -84,7 +84,7 @@ public class MenuAnhadirPuntoInteresView extends AppCompatActivity implements IA
     @Override
     public IPuntosInteresDao getPuntosInteresDAO() {
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name").build();
+                AppDatabase.class, "puntos-interes").allowMainThreadQueries().build();
         return db.puntosInteresDao();
     }
 }
