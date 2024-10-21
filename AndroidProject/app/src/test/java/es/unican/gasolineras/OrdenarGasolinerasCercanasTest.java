@@ -1,14 +1,16 @@
 package es.unican.gasolineras;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -42,6 +44,8 @@ public class OrdenarGasolinerasCercanasTest {
 
     private PuntoInteres universidad;
 
+    private List<Gasolinera> listaGasolineras;
+
     @Before
     public void inicializa(){
 
@@ -53,14 +57,18 @@ public class OrdenarGasolinerasCercanasTest {
         //creo las gasolineras
         gasolineraCercana = new Gasolinera();
         gasolineraCercana.setId("GasolineraPaco");
-        gasolineraCercana.setDireccion("Calle Los Castros");
+        gasolineraCercana.setDireccion("Sardinero");
+        gasolineraCercana.setLatitud(43.47618775921668);
+        gasolineraCercana.setLongitud(-3.7933535145721233);
 
         gasolineraLejana = new Gasolinera();
         gasolineraLejana.setId("GasolineraMario");
-        gasolineraLejana.setDireccion("Calle Honduras");
+        gasolineraLejana.setDireccion("Torrelavega");
+        gasolineraLejana.setLatitud(43.356608665447474);
+        gasolineraLejana.setLongitud(-4.046146566530483);
 
         //creo la lista de gasolineras que voy a mockear
-        List<Gasolinera> listaGasolineras = new ArrayList<>();
+        listaGasolineras = new ArrayList<>();
         listaGasolineras.add(gasolineraCercana);
         listaGasolineras.add(gasolineraLejana);
 
@@ -89,8 +97,21 @@ public class OrdenarGasolinerasCercanasTest {
     @Test
     public void testOrdenaGasolinerasMasCercanas(){
 
+        //creo capturacion de la lista de las gasolineras ya ordenadas
+        ArgumentCaptor<List<Gasolinera>> captor = ArgumentCaptor.forClass(List.class);
+
+        //inicializo
         sut.init(mockVista);
 
+        //llamo al metodo que pruebo
+        sut.ordenarGasolinerasCercanasPtoInteres(universidad);
 
+        //capturo la lista
+        verify(mockVista, times(2)).showStations(captor.capture());
+
+        //verifico que la lista este bien ordenada
+        List<Gasolinera> listaCapturada = captor.getValue();
+        assertEquals(gasolineraCercana, listaCapturada.get(0));
+        assertEquals(gasolineraLejana, listaCapturada.get(1));
     }
 }

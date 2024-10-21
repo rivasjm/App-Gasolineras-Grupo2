@@ -24,8 +24,7 @@ public class GasolineraDistanciaComparator implements Comparator<Gasolinera> {
         //si la primera gasolinera esta mas cerca retorno +
         //si la primera gasolinera esta mas lejos retorno -
         //si estan a la misma distancia retorno 0
-        return Double.compare(distancia2, distancia1);
-
+        return Double.compare(distancia1, distancia2);
     }
 
     public double harvesine(Gasolinera g, PuntoInteres p){

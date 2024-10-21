@@ -16,11 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.room.Room;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,7 +33,6 @@ import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.DbFunctions;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 import es.unican.gasolineras.repository.IPuntosInteresDAO;
-import es.unican.gasolineras.repository.IPuntosInteresDAO_Impl;
 
 /**
  * The main view of the application. It shows a list of gas stations.
@@ -237,6 +234,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     @Override
     public void onOrdenarClicked(PuntoInteres p) {
-        presenter.ordenarListaGasolineras(p);
+        presenter.ordenarGasolinerasCercanasPtoInteres(p);
     }
 }
