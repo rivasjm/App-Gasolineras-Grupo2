@@ -17,8 +17,6 @@ public class DistanciaComparatorTest {
     private Gasolinera auxCercana;
 
 
-    private PuntoInteres universidad;
-
     @Before
     public void inicializa(){
 
@@ -42,7 +40,7 @@ public class DistanciaComparatorTest {
         auxCercana.setLongitud(-3.7933535145721233);
 
         //creo un punto de interes
-        universidad = new PuntoInteres();
+        PuntoInteres universidad = new PuntoInteres();
         universidad.nombre = "Universidad";
         universidad.latitud = 43.47122194796555;
         universidad.longitud = -3.800797786772268;
@@ -54,10 +52,10 @@ public class DistanciaComparatorTest {
     public void testComparadorDistancia(){
 
         //caso que la primera gasolinera esta mas cerca
-        assertEquals(comparadorDistancia.compare(cercana, lejana), 1);
+        assertEquals(comparadorDistancia.compare(cercana, lejana), -1);
 
         //caso que la primera gasolinera esta mas lejos
-        assertEquals(comparadorDistancia.compare(lejana, cercana), -1);
+        assertEquals(comparadorDistancia.compare(lejana, cercana), 1);
 
         //caso que esten a la misma distancia
         assertEquals(comparadorDistancia.compare(cercana, auxCercana), 0);
