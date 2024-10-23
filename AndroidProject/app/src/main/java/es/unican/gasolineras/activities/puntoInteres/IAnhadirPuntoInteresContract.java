@@ -1,6 +1,7 @@
 package es.unican.gasolineras.activities.puntoInteres;
 
-import es.unican.gasolineras.repository.IPuntosInteresDao;
+import es.unican.gasolineras.repository.IPuntosInteresDAO;
+
 
 /**
  * Interfaz que define la vista para la funcionalidad de añadir un punto de interés.
@@ -55,7 +56,7 @@ public interface IAnhadirPuntoInteresContract {
          *
          * @return El DAO de puntos de interés.
          */
-        public IPuntosInteresDao getPuntosInteresDAO();
+        public IPuntosInteresDAO getPuntosInteresDAO();
     }
 
     /**

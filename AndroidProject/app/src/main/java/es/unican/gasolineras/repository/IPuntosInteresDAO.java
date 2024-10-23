@@ -31,4 +31,7 @@ public interface IPuntosInteresDAO {
 
     @Delete
     void delete(PuntoInteres puntoInteres);
+
+    @Query("DELETE FROM PuntoInteres")
+    void deleteAll();
 }
