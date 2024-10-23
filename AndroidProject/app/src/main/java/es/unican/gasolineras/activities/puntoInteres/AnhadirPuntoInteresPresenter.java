@@ -28,6 +28,7 @@ public class AnhadirPuntoInteresPresenter implements IAnhadirPuntoInteresContrac
      * Maneja la lógica de negocio relacionada con la validación de datos y el acceso a la base de datos
      * para insertar un nuevo punto de interés.
      */
+    @Override
     public void onGuardarPuntoInteresClicked(String nombre, String latitudStr, String longitudStr) {
 
         // Validar que los campos no estén vacíos
