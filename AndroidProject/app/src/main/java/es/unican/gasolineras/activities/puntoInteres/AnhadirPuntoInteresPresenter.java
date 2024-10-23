@@ -12,7 +12,7 @@ import es.unican.gasolineras.repository.IPuntosInteresDAO;
 public class AnhadirPuntoInteresPresenter implements IAnhadirPuntoInteresContract.Presenter {
 
     private IAnhadirPuntoInteresContract.View vista;
-    private IPuntosInteresDAO puntosInteresDao;
+    private IPuntosInteresDAO puntosInteresDAO;
 
     /**
      * Constructor.
@@ -20,7 +20,7 @@ public class AnhadirPuntoInteresPresenter implements IAnhadirPuntoInteresContrac
      */
     public AnhadirPuntoInteresPresenter(IAnhadirPuntoInteresContract.View vista) {
         this.vista = vista;
-        this.puntosInteresDao = vista.getPuntosInteresDAO();
+        this.puntosInteresDAO = vista.getPuntosInteresDAO();
     }
 
     /**
@@ -45,7 +45,7 @@ public class AnhadirPuntoInteresPresenter implements IAnhadirPuntoInteresContrac
             PuntoInteres nuevoPunto = new PuntoInteres(nombre, latitud, longitud);
 
             // Insertar el nuevo punto de interés en la base de datos
-            puntosInteresDao.insertAll(nuevoPunto);
+            puntosInteresDAO.insertAll(nuevoPunto);
 
             vista.mostrarMensaje("Punto de interés guardado");
             vista.cerrarVista(); // Cerrar la vista después de guardar
