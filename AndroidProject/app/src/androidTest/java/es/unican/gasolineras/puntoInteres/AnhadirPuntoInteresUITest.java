@@ -29,6 +29,7 @@ import org.junit.runner.RunWith;
 
 import dagger.hilt.android.testing.BindValue;
 import dagger.hilt.android.testing.HiltAndroidRule;
+import dagger.hilt.android.testing.HiltAndroidTest;
 import dagger.hilt.android.testing.UninstallModules;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.main.MainView;
@@ -36,7 +37,7 @@ import es.unican.gasolineras.injection.RepositoriesModule;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 @UninstallModules(RepositoriesModule.class)
-@RunWith(AndroidJUnit4.class)
+@HiltAndroidTest
 public class AnhadirPuntoInteresUITest {
 
     @Rule(order = 0)  // the Hilt rule must execute first
@@ -52,9 +53,11 @@ public class AnhadirPuntoInteresUITest {
     @BindValue
     final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_ccaa_06);
 
+    View decorView;
+
     @Before
     public void setUp() {
-        View decorView;
+
         activityRule.getScenario().onActivity(activity -> decorView = activity.getWindow().getDecorView());
 
     }
@@ -64,22 +67,41 @@ public class AnhadirPuntoInteresUITest {
 
         // Caso de exito
         openActionBarOverflowOrOptionsMenu(context);
-        onView(withId(R.id.menuItemAnhadirPuntoInteres)).perform(click());
-        onView(withId(R.id.textView3)).perform(click());
-        onView(withId(R.id.textView3)).perform(typeText("casa"));
+        onView((withText("Añadir Punto interés"))).perform(click());
+        onView(withId(R.id.etNombre)).perform(click());
+        onView(withId(R.id.etNombre)).perform(typeText("casa"));
         Espresso.closeSoftKeyboard();
 
-        onView(withId(R.id.textView4)).perform(typeText("43.46227"));
+        onView(withId(R.id.etLatitud)).perform(click());
+        onView(withId(R.id.etLatitud)).perform(typeText("43.46227"));
         Espresso.closeSoftKeyboard();
 
-        onView(withId(R.id.textView5)).perform(typeText("-3.80974"));
+        onView(withId(R.id.etLongitud)).perform(click());
+        onView(withId(R.id.etLongitud)).perform(typeText("-3.80974"));
         Espresso.closeSoftKeyboard();
 
         onView(withId(R.id.buttonGuardar)).perform(click());
         onView(withText("Punto de interés guardado")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
 
+        // Caso no valido (ya existe punto con ese nombre)
+        openActionBarOverflowOrOptionsMenu(context);
+        onView((withText("Añadir Punto interés"))).perform(click());
+        onView(withId(R.id.etNombre)).perform(click());
+        onView(withId(R.id.etNombre)).perform(typeText("casa"));
+        Espresso.closeSoftKeyboard();
 
+        onView(withId(R.id.etLatitud)).perform(click());
+        onView(withId(R.id.etLatitud)).perform(typeText("43.4733"));
+        Espresso.closeSoftKeyboard();
 
+        onView(withId(R.id.etLongitud)).perform(click());
+        onView(withId(R.id.etLongitud)).perform(typeText("-3.80111"));
+        Espresso.closeSoftKeyboard();
+
+        onView(withId(R.id.buttonGuardar)).perform(click());
+        onView(withText("Ya existe un punto de interés con ese nombre")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
+
+        onView(withId(R.id.buttonCancelar)).perform(click());
 
     }
 

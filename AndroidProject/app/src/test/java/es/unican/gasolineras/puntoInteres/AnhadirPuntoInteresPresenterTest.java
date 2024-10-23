@@ -85,5 +85,7 @@ public class AnhadirPuntoInteresPresenterTest {
         presenter.onGuardarPuntoInteresClicked("pabellon", "43.47578", "-3.76644");
         verify(vistaMock).mostrarMensaje("Ha ocurrido un error en la base de datos");*/
 
+        puntosInteresDao.delete(puntoCapturado);
+
     }
 }
