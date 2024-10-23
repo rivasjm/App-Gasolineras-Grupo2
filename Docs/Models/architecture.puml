@@ -10,7 +10,6 @@ MainView -up..-> InfoView : <<use>>
 MainView -down..> DetailsView : <<use>>
 MainPresenter -right(0- GasolinerasRepository : IGasolinerasRepository
 
-
 class MainPresenter {
     -load()
 }
@@ -40,5 +39,39 @@ interface ICallBack {
     + onFailure(Throwable e)
 }
 
+class AnhadirPuntoInteresPresenter {
+    - onGuardarPuntoInteresClicked(String nombre, String latitudStr, String longitudStr)
+}
+
+AnhadirPuntoInteresPresenter --> IAnhadirPuntoInteresView : controla
+
+interface IAnhadirPuntoInteresView {
+    + mostrarMensaje(String mensaje)
+    + obtenerNombre() : String
+    + obtenerLatitud() : String
+    + obtenerLongitud() : String
+    + cerrarVista()
+    + getPuntosInteresDAO() : IPuntosInteresDao
+}
+
+class MenuAnhadirPuntoInteresView {
+    - etNombre : EditText
+    - etLatitud : EditText
+    - etLongitud : EditText
+    - btnGuardar : Button
+    - btnCancelar : Button
+}
+
+MenuAnhadirPuntoInteresView --> AnhadirPuntoInteresPresenter : usa
+MenuAnhadirPuntoInteresView --> IPuntosInteresDao : accede
+
+interface IPuntosInteresDao {
+    + getAll() : List<PuntoInteres>
+    + loadById(int PuntoInteresId) : PuntoInteres
+    + loadByName(String NombrePuntoInteres) : PuntoInteres
+    + loadByLatLon(double lat, double lon) : PuntoInteres
+    + insertAll(PuntoInteres... puntoInteres)
+    + delete(PuntoInteres puntoInteres)
+}
 
 @enduml
