@@ -55,6 +55,9 @@ public interface IPuntosInteresDao {
     @Insert
     void insertAll(PuntoInteres... puntoInteres);
 
+    @Query("DELETE FROM PuntoInteres")
+    void deleteAll();
+
     /**
      * Elimina un punto de interés de la base de datos.
      *
