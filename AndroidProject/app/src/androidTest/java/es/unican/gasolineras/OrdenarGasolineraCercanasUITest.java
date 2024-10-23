@@ -3,6 +3,7 @@ package es.unican.gasolineras;
 import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -103,7 +104,7 @@ public class OrdenarGasolineraCercanasUITest {
         g1.onChildView(withId(R.id.tvAddress)).check(matches(withText("CALLE CORREOS, SN")));
 
         //comprueba la direccion de la segunda gasolinera
-        DataInteraction g2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
+        DataInteraction g2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(1);
         g2.onChildView(withId(R.id.tvAddress)).check(matches(withText("CARRETERA 634 KM. 244")));
     }
 

@@ -34,7 +34,10 @@ import dagger.hilt.android.testing.UninstallModules;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.injection.RepositoriesModule;
+import es.unican.gasolineras.repository.AppDatabase;
+import es.unican.gasolineras.repository.DbFunctions;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
+import es.unican.gasolineras.repository.IPuntosInteresDAO;
 
 @UninstallModules(RepositoriesModule.class)
 @HiltAndroidTest
@@ -59,7 +62,9 @@ public class AnhadirPuntoInteresUITest {
     public void setUp() {
 
         activityRule.getScenario().onActivity(activity -> decorView = activity.getWindow().getDecorView());
-
+        AppDatabase db = DbFunctions.generaBaseDatosPuntosInteres(context.getApplicationContext());
+        IPuntosInteresDAO puntosInteresDao = db.puntosInteresDao();
+        puntosInteresDao.deleteAll();
     }
 
     @Test
