@@ -10,26 +10,20 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteConstraintException;
-import android.database.sqlite.SQLiteException;
 
 import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.function.ThrowingRunnable;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.robolectric.RobolectricTestRunner;
 
 import es.unican.gasolineras.activities.puntoInteres.AnhadirPuntoInteresPresenter;
 import es.unican.gasolineras.activities.puntoInteres.IAnhadirPuntoInteresContract;
-import es.unican.gasolineras.activities.puntoInteres.IAnhadirPuntoInteresContract.View;
-import es.unican.gasolineras.model.GasolinerasResponse;
 import es.unican.gasolineras.model.PuntoInteres;
 import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.DbFunctions;
-import es.unican.gasolineras.repository.IPuntosInteresDao;
+import es.unican.gasolineras.repository.IPuntosInteresDAO;
 
 @RunWith(RobolectricTestRunner.class)
 public class AnhadirPuntoInteresPresenterTest {
@@ -39,7 +33,7 @@ public class AnhadirPuntoInteresPresenterTest {
     Context context = ApplicationProvider.getApplicationContext();
 
     private IAnhadirPuntoInteresContract.View vistaMock;
-    private IPuntosInteresDao puntosInteresDao;
+    private IPuntosInteresDAO puntosInteresDao;
     private AnhadirPuntoInteresPresenter presenter;
 
     String nombreStr = "casa";

@@ -4,7 +4,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteException;
 
 import es.unican.gasolineras.model.PuntoInteres;
-import es.unican.gasolineras.repository.IPuntosInteresDao;
+import es.unican.gasolineras.repository.IPuntosInteresDAO;
 
 /**
  * El presenter que controla la actividad añadir punto interés.
@@ -12,7 +12,7 @@ import es.unican.gasolineras.repository.IPuntosInteresDao;
 public class AnhadirPuntoInteresPresenter implements IAnhadirPuntoInteresContract.Presenter {
 
     private IAnhadirPuntoInteresContract.View vista;
-    private IPuntosInteresDao puntosInteresDao;
+    private IPuntosInteresDAO puntosInteresDao;
 
     /**
      * Constructor.

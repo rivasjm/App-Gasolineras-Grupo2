@@ -4,21 +4,20 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import java.util.List;
 
 import es.unican.gasolineras.model.PuntoInteres;
 
 /**
- * La interfaz {@code IPuntosInteresDao} define las operaciones de acceso a datos (DAO)
+ * La interfaz {@code IPuntosInteresDAO} define las operaciones de acceso a datos (DAO)
  * para la entidad {@link PuntoInteres}. Esta interfaz proporciona métodos para interactuar
  * con la base de datos, como insertar, eliminar y consultar puntos de interés.
  * Anotada con {@link Dao}, esta interfaz es utilizada por Room para generar automáticamente
  * el código necesario para las operaciones de base de datos.
  */
 @Dao
-public interface IPuntosInteresDao {
+public interface IPuntosInteresDAO {
     @Query("SELECT * FROM PuntoInteres")
     List<PuntoInteres> getAll();
 

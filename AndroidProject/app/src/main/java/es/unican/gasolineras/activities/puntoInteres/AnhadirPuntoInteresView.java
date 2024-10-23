@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.DbFunctions;
-import es.unican.gasolineras.repository.IPuntosInteresDao;
+import es.unican.gasolineras.repository.IPuntosInteresDAO;
 
 /**
  * Actividad que representa la vista para añadir un nuevo punto de interés.
@@ -117,7 +117,7 @@ public class AnhadirPuntoInteresView extends AppCompatActivity implements IAnhad
      * @return El DAO de puntos de interés.
      */
     @Override
-    public IPuntosInteresDao getPuntosInteresDAO() {
+    public IPuntosInteresDAO getPuntosInteresDAO() {
         AppDatabase db = DbFunctions.generaBaseDatosPuntosInteres(getApplicationContext());
         return db.puntosInteresDao();
     }
