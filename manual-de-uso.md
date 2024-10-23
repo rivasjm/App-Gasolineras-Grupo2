@@ -40,3 +40,14 @@ El usuario puede cancelar el proceso en cualquier momento pulsando el botón **C
 - **Por favor, ingresa valores numéricos válidos para latitud y longitud**: Aparece cuando los valores introducidos para latitud o longitud no son numéricos.
 - **Ya existe un punto de interés con ese nombre**: Aparece cuando el nombre del punto de interés ya está registrado en la base de datos.
 - **Ha ocurrido un error en la base de datos**: Aparece cuando ocurre un error inesperado al acceder a la base de datos.
+
+## Filtros sobre gasolineras
+
+### 1. Ordenar gasolineras mas cercanas a un punto de interes.
+
+1. El usuario pulsa el icono de filtrar gasolineras que aparece en la barra de opciones de la parte superior de la aplicacion.
+
+<img src="https://github.com/user-attachments/assets/95adbb12-200c-46c1-b0cf-e0f41a16bf42" alt="Paso 3" width="400"/>
+
+2. Aparece una ventana emergente donde se le muestra al usuario 
+

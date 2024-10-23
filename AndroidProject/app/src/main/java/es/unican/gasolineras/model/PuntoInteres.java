@@ -22,7 +22,7 @@ import lombok.Setter;
 @Setter
 @Entity(indices = {@Index(value = {"nombre"}, unique = true)})
 public class PuntoInteres {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int idPuntoInteres;
 
     @ColumnInfo(name = "nombre")
