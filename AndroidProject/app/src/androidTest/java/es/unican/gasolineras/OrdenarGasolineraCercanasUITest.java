@@ -15,11 +15,9 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
-import android.widget.ListView;
 
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.Espresso;
@@ -36,8 +34,6 @@ import dagger.hilt.android.testing.HiltAndroidTest;
 import dagger.hilt.android.testing.UninstallModules;
 import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.injection.RepositoriesModule;
-import es.unican.gasolineras.model.Gasolinera;
-import es.unican.gasolineras.model.PuntoInteres;
 import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.DbFunctions;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
@@ -66,7 +62,7 @@ public class OrdenarGasolineraCercanasUITest {
         //estado inicial base de datos Ptos Interes vacia
         AppDatabase db = DbFunctions.generaBaseDatosPuntosInteres(getApplicationContext());
         IPuntosInteresDAO ptDAO = db.puntosInteresDao();
-        ptDAO.deleteAll();
+        //ptDAO.deleteAll();
     }
 
     @Test
@@ -111,14 +107,13 @@ public class OrdenarGasolineraCercanasUITest {
         g2.onChildView(withId(R.id.tvAddress)).check(matches(withText("CARRETERA 634 KM. 244")));
     }
 
+    @Test
     public void OrdenarGasolinerasCercanasNoPtoInteres(){
 
         //clicka en filtrar
         onView(withId(R.id.menuFiltrar)).perform(click());
 
-        //clicka en el selector de Pto Interes
-        onView(withId(R.id.spinnerPtosInteres)).perform(click());
-
+        //comprueba mensaje de error
         onView(withId(R.id.tvListaVacia)).
                 check(matches(withText("Error: No hay ningun punto de interes añadido")));
     }
