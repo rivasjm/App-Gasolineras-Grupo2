@@ -45,7 +45,7 @@ interface ICallBack {
 }
 
 interface IAnhadirPuntoInteresContract#Presenter {
-    + AnhadirPuntoInteresPresenter(IAnhadirPuntoInteresContract.View vista)
+    + onGuardarPuntoInteresClicked(String nombre, String latitudStr, String longitudStr)
 }
 
 interface IAnhadirPuntoInteresContract#View {
