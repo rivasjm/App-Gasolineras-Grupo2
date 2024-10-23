@@ -1,4 +1,4 @@
-package es.unican.gasolineras;
+package es.unican.gasolineras.activities.main;
 
 import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.espresso.Espresso.onData;
@@ -33,7 +33,7 @@ import dagger.hilt.android.testing.BindValue;
 import dagger.hilt.android.testing.HiltAndroidRule;
 import dagger.hilt.android.testing.HiltAndroidTest;
 import dagger.hilt.android.testing.UninstallModules;
-import es.unican.gasolineras.activities.main.MainView;
+import es.unican.gasolineras.R;
 import es.unican.gasolineras.injection.RepositoriesModule;
 import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.DbFunctions;
@@ -55,7 +55,7 @@ public class OrdenarGasolineraCercanasUITest {
 
     // Mock repository that provides data from a JSON file instead of downloading it from the internet.
     @BindValue
-    final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_ccaa_06);
+    public final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_ccaa_06);
 
 
     @Before

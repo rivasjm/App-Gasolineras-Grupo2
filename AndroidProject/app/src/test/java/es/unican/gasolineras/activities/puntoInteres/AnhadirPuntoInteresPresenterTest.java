@@ -1,4 +1,4 @@
-package es.unican.gasolineras.puntoInteres;
+package es.unican.gasolineras.activities.puntoInteres;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;

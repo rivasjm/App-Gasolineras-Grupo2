@@ -1,4 +1,4 @@
-package es.unican.gasolineras.puntoInteres;
+package es.unican.gasolineras.activities.puntoInteres;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
@@ -54,7 +54,7 @@ public class AnhadirPuntoInteresUITest {
 
     // Mock repository that provides data from a JSON file instead of downloading it from the internet.
     @BindValue
-    final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_ccaa_06);
+    public final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_ccaa_06);
 
     View decorView;
 
