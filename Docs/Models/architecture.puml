@@ -48,10 +48,6 @@ interface IAnhadirPuntoInteresContract#Presenter {
     + AnhadirPuntoInteresPresenter(IAnhadirPuntoInteresContract.View vista)
 }
 
-class AnhadirPuntoInteresPresenter {
-    + onGuardarPuntoInteresClicked(String nombre, String latitudStr, String longitudStr)
-}
-
 interface IAnhadirPuntoInteresContract#View {
     + mostrarMensaje(String mensaje)
     + obtenerNombre() : String
