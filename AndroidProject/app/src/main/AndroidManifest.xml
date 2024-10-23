@@ -19,7 +19,7 @@
             android:name=".activities.info.InfoView"
             android:exported="false" />
         <activity
-            android:name=".activities.puntoInteres.MenuAnhadirPuntoInteresView"
+            android:name=".activities.puntoInteres.AnhadirPuntoInteresView"
             android:exported="false" />
         <activity
             android:name=".activities.details.DetailsView"
