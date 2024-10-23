@@ -39,6 +39,10 @@ public interface IMainContract {
          */
         public void onMenuInfoClicked();
 
+        /**
+         *
+         */
+        public void onMenuAnhadirPuntoInteresClicked();
     }
 
     /**
@@ -101,8 +105,8 @@ public interface IMainContract {
         public void showInfoActivity();
 
         /**
-         *
-         * @return
+         * The view is requested to open the AñadirPuntoInteres activity.
+         * Only the Presenter should call this method
          */
         public void getPuntosInteresDAO();
 
@@ -116,5 +120,6 @@ public interface IMainContract {
          * Informa al presenter que el boton de ordenar ha sido clickado.
          */
         public void onOrdenarClicked(PuntoInteres p);
+        public void showAnhadirPuntoInteresActivity();
     }
 }

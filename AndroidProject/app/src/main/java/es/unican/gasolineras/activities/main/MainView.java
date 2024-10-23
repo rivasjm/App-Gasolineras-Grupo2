@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.room.Room;
 
 import org.parceler.Parcels;
 
@@ -28,6 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
+import es.unican.gasolineras.activities.puntoInteres.AnhadirPuntoInteresView;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.PuntoInteres;
 import es.unican.gasolineras.repository.AppDatabase;
@@ -101,8 +103,15 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             presenter.onMenuFiltrarClicked();
             return true;
         }
+
+        if (itemId == R.id.menuItemAnhadirPuntoInteres) {
+            presenter.onMenuAnhadirPuntoInteresClicked();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
+
+
 
     /**
      * @see IMainContract.View#init()
@@ -174,6 +183,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         startActivity(intent);
     }
 
+    /**
+     * @see IMainContract.View#showAnhadirPuntoInteresActivity()
+     */
     @Override
     public void getPuntosInteresDAO() {
         db = DbFunctions.generaBaseDatosPuntosInteres(getApplicationContext());
@@ -246,5 +258,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void onOrdenarClicked(PuntoInteres p) {
         presenter.ordenarGasolinerasCercanasPtoInteres(p);
+    }
+
+    @Override
+    public void showAnhadirPuntoInteresActivity() {
+        Intent intent = new Intent(this, AnhadirPuntoInteresView.class);
+        startActivity(intent);
     }
 }

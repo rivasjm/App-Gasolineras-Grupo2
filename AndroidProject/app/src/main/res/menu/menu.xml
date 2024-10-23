@@ -11,4 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="@string/info" />
+    <item
+        android:id="@+id/menuItemAnhadirPuntoInteres"
+        android:checkable="false"
+        android:title="Añadir Punto interés" />
+
 </menu>
