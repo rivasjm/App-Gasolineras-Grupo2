@@ -23,7 +23,8 @@ import org.mockito.ArgumentCaptor;
 import org.robolectric.RobolectricTestRunner;
 
 import es.unican.gasolineras.activities.puntoInteres.AnhadirPuntoInteresPresenter;
-import es.unican.gasolineras.activities.puntoInteres.IAnhadirPuntoInteresView;
+import es.unican.gasolineras.activities.puntoInteres.IAnhadirPuntoInteresContract;
+import es.unican.gasolineras.activities.puntoInteres.IAnhadirPuntoInteresContract.View;
 import es.unican.gasolineras.model.GasolinerasResponse;
 import es.unican.gasolineras.model.PuntoInteres;
 import es.unican.gasolineras.repository.AppDatabase;
@@ -37,7 +38,7 @@ public class AnhadirPuntoInteresPresenterTest {
 
     Context context = ApplicationProvider.getApplicationContext();
 
-    private IAnhadirPuntoInteresView vistaMock;
+    private IAnhadirPuntoInteresContract.View vistaMock;
     private IPuntosInteresDao puntosInteresDao;
     private AnhadirPuntoInteresPresenter presenter;
 
@@ -53,7 +54,7 @@ public class AnhadirPuntoInteresPresenterTest {
     @Before
     public void setUp() {
 
-        vistaMock = mock(IAnhadirPuntoInteresView.class);
+        vistaMock = mock(IAnhadirPuntoInteresContract.View.class);
 
         db = DbFunctions.generaBaseDatosPuntosInteres(context);
         puntosInteresDao = db.puntosInteresDao();

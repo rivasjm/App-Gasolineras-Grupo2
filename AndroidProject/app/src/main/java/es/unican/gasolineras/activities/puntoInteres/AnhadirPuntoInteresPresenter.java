@@ -9,16 +9,16 @@ import es.unican.gasolineras.repository.IPuntosInteresDao;
 /**
  * El presenter que controla la actividad añadir punto interés.
  */
-public class AnhadirPuntoInteresPresenter {
+public class AnhadirPuntoInteresPresenter implements IAnhadirPuntoInteresContract.Presenter {
 
-    private IAnhadirPuntoInteresView vista;
+    private IAnhadirPuntoInteresContract.View vista;
     private IPuntosInteresDao puntosInteresDao;
 
     /**
      * Constructor.
      * @param vista vista controlada por este presenter.
      */
-    public AnhadirPuntoInteresPresenter(IAnhadirPuntoInteresView vista) {
+    public AnhadirPuntoInteresPresenter(IAnhadirPuntoInteresContract.View vista) {
         this.vista = vista;
         this.puntosInteresDao = vista.getPuntosInteresDAO();
     }

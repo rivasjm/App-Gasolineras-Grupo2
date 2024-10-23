@@ -16,10 +16,10 @@ import es.unican.gasolineras.repository.IPuntosInteresDao;
 /**
  * Actividad que representa la vista para añadir un nuevo punto de interés.
  * Permite al usuario introducir la información del punto de interés (nombre, latitud, longitud)
- * y guardarlo en la base de datos. Implementa la interfaz {@link IAnhadirPuntoInteresView}
+ * y guardarlo en la base de datos. Implementa la interfaz {@link IAnhadirPuntoInteresContract.View}
  * para interactuar con el presentador {@link AnhadirPuntoInteresPresenter}.
  */
-public class MenuAnhadirPuntoInteresView extends AppCompatActivity implements IAnhadirPuntoInteresView {
+public class AnhadirPuntoInteresView extends AppCompatActivity implements IAnhadirPuntoInteresContract.View {
 
     private EditText etNombre, etLatitud, etLongitud;
     private Button btnGuardar, btnCancelar;
