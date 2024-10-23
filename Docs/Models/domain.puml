@@ -21,10 +21,10 @@ class GasolinerasResponse {
 GasolinerasResponse *-- "*" Gasolinera : gasolineras
 
 class PuntoInteres {
-    + int idPuntoInteres
-    + String nombre
-    + double latitud
-    + double longitud
+    - int idPuntoInteres
+    - String nombre
+    - double latitud
+    - double longitud
 }
 
 @enduml
