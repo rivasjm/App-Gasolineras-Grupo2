@@ -1,5 +1,6 @@
 package es.unican.gasolineras;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -37,7 +38,10 @@ import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.injection.RepositoriesModule;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.PuntoInteres;
+import es.unican.gasolineras.repository.AppDatabase;
+import es.unican.gasolineras.repository.DbFunctions;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
+import es.unican.gasolineras.repository.IPuntosInteresDAO;
 
 @UninstallModules(RepositoriesModule.class)
 @HiltAndroidTest
@@ -60,13 +64,15 @@ public class OrdenarGasolineraCercanasUITest {
     @Before
     public void inicializa(){
         //estado inicial base de datos Ptos Interes vacia
-
+        AppDatabase db = DbFunctions.generaBaseDatosPuntosInteres(getApplicationContext());
+        IPuntosInteresDAO ptDAO = db.puntosInteresDao();
+        ptDAO.deleteAll();
     }
 
     @Test
-    public void testOrdenaGasolinerasCercanas() {
-
+    public void testOrdenaGasolinerasCercanasCasoExito() {
         //creo un punto de interes
+
         openActionBarOverflowOrOptionsMenu(context);
         onView((withText("Añadir Punto interés"))).perform(click());
         onView(withId(R.id.etNombre)).perform(click());
@@ -103,6 +109,18 @@ public class OrdenarGasolineraCercanasUITest {
         //comprueba la direccion de la segunda gasolinera
         DataInteraction g2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
         g2.onChildView(withId(R.id.tvAddress)).check(matches(withText("CARRETERA 634 KM. 244")));
+    }
+
+    public void OrdenarGasolinerasCercanasNoPtoInteres(){
+
+        //clicka en filtrar
+        onView(withId(R.id.menuFiltrar)).perform(click());
+
+        //clicka en el selector de Pto Interes
+        onView(withId(R.id.spinnerPtosInteres)).perform(click());
+
+        onView(withId(R.id.tvListaVacia)).
+                check(matches(withText("Error: No hay ningun punto de interes añadido")));
     }
 }
 
