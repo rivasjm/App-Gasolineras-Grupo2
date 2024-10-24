@@ -95,6 +95,7 @@ jobs:
           name: test-outputs
           path: ./AndroidProject/app/build/outputs/
 
+
   # build:
   #   name: Build APK
   #   runs-on: ubuntu-22.04
